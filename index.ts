@@ -28,7 +28,7 @@ interface IMediaFileMeta {
 export function list(path: string, config?: IMediaFileInfoConf) {
     return new Promise<IMediaFileResp[]>((resolve, reject) => {
 
-        dir.readFiles(__dirname, {}, function (err, content, next) {
+        dir.readFiles(path, {}, function (err, content, next) {
             if (err) {
                 reject(err)
             } else {
