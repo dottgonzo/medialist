@@ -1,4 +1,4 @@
-import * as dir from 'node-dir'
+import * as find from 'find'
 import * as fileinfo from 'filenameinfo'
 import * as Promise from 'bluebird'
 import * as async from 'async'
@@ -27,65 +27,55 @@ interface IMediaFileMeta {
 }
 export function list(path: string, config?: IMediaFileInfoConf) {
     return new Promise<IMediaFileResp[]>((resolve, reject) => {
+        find.file(path, function (files) {
 
-        dir.readFiles(path, {}, function (err, content, next) {
-            if (err) {
-                reject(err)
-            } else {
-                next();
+
+            const media: IMediaFileResp[] = []
+
+
+
+            for (let i = 0; i < files.length; i++) {
+                console.log(files[i])
+                const m: any = fileinfo.filenameinfo(files[i])
+                if (m.extensionFamily === 'video' || m.extensionFamily === 'audio') {
+                    media.push(m)
+
+                }
+
             }
-        },
-            function (err, files) {
+
+
+
+            async.eachSeries(media, (m, cb) => {
+                getDuration(m.path).then((a) => {
+                    m.duration = a
+                    ffmetadata.read(m.path, function (err, data) {
+                        if (err) {
+                            cb("Error reading metadata")
+                        } else {
+                            m.meta = data
+                            cb()
+                        };
+                    });
+
+                }).catch((err) => {
+                    cb(err)
+                })
+            }, (err) => {
                 if (err) {
                     reject(err)
                 } else {
-                    const media: IMediaFileResp[] = []
-
-
-
-                    for (let i = 0; i < files.length; i++) {
-                        const m: any = fileinfo.filenameinfo(files[i])
-                        if (m.extensionFamily === 'video' || m.extensionFamily === 'audio') {
-
-                            media.push(m)
-
-                        }
-
-                    }
-
-
-
-                    async.eachSeries(media, (m, cb) => {
-                        getDuration(m.path).then((a) => {
-                            m.duration = a
-                            ffmetadata.read(m.path, function (err, data) {
-                                if (err) {
-                                    cb("Error reading metadata")
-                                } else {
-                                    m.meta = data
-                                    cb()
-                                };
-                            });
-
-                        }).catch((err) => {
-                            cb(err)
-                        })
-                    }, (err) => {
-                        if (err) {
-                            reject(err)
-                        } else {
-                            resolve(media)
-                        }
-                    })
-
-
-
+                    resolve(media)
                 }
-            });
+            })
 
 
 
+        })
     })
 
 
+
 }
+
+

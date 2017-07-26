@@ -1,6 +1,6 @@
 {
   "name": "medialist",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "list media files",
   "main": "index.js",
   "scripts": {
@@ -41,7 +41,7 @@
     "bluebird": "^3.5.0",
     "ffmetadata": "^1.4.0",
     "filenameinfo": "0.0.3",
-    "get-video-duration": "^0.2.0",
-    "node-dir": "^0.1.17"
+    "find": "^0.2.7",
+    "get-video-duration": "^0.2.0"
   }
 }
