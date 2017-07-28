@@ -11,6 +11,7 @@ const ffmetadata = require("ffmetadata");
 interface IMediaFileInfoConf {
   formats?: string[]
   exclude?: string[]
+  serverUri?: { path: string, uri: string }
 }
 interface IMediaFileResp {
   meta: IMediaFileMeta
@@ -24,9 +25,11 @@ interface IMediaFileResp {
   extensionType: string
   uid: string
 }
+
 interface IMediaFileMeta {
 
 }
+
 export function list(path: string, config?: IMediaFileInfoConf) {
 
   function createuid(array) {
@@ -60,6 +63,11 @@ export function list(path: string, config?: IMediaFileInfoConf) {
 
 
           m.uid = createuid(media)
+
+          if (config && config.serverUri && config.serverUri.path && config.serverUri.uri && m.path.split(config.serverUri.path).length > 1 && m.path.split(config.serverUri.path)[0] === '') {
+            m.uri = config.serverUri.uri + m.path.split(config.serverUri.path)[1]
+          }
+
 
           media.push(m)
 
