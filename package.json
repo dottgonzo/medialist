@@ -1,6 +1,6 @@
 {
   "name": "medialist",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "list media files",
   "main": "index.js",
   "scripts": {
@@ -34,6 +34,7 @@
     "gulp-typescript": "^3.2.1",
     "gulp-util": "^3.0.8",
     "mocha": "^3.4.2",
+    "tslint-eslint-rules": "^4.1.1",
     "typescript": "^2.4.2"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "ffmetadata": "^1.4.0",
     "filenameinfo": "0.0.3",
     "find": "^0.2.7",
-    "get-video-duration": "^0.2.0"
+    "get-video-duration": "^0.2.0",
+    "unicoid": "^1.0.4"
   }
 }
