@@ -50,8 +50,8 @@ export function list(path: string, config?: IMediaFileInfoConf) {
   }
 
   return new Promise<IMediaFileResp[]>((resolve, reject) => {
-    try {
-      find.file(path, function (files) {
+
+    find.file(path, function (files) {
 
 
         const media: IMediaFileResp[] = []
@@ -103,13 +103,15 @@ export function list(path: string, config?: IMediaFileInfoConf) {
 
 
 
+      }).error(function(err) {
+        if (err) {
+          reject(err)
+        } else {
+          reject('find error')
+        }
       })
 
-    } catch (err) {
 
-      reject(err)
-
-    }
 
   })
 
