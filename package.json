@@ -1,10 +1,11 @@
 {
   "name": "medialist",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "list media files",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build":"./node_modules/.bin/gulp build"
   },
   "repository": {
     "type": "git",
