@@ -76,7 +76,7 @@ export function list(path: string, config?: IMediaFileInfoConf) {
 
             console.log('add ' + files[0], getFileSize(files[0]))
             
-            // media.push(m)
+             media.push(m)
 
           }
         }
