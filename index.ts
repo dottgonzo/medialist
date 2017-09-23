@@ -76,7 +76,7 @@ export function list(path: string, config?: IMediaFileInfoConf) {
             }
 
 
-            media.push(m)
+            // media.push(m)
 
           }
         }
