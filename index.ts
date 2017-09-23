@@ -74,7 +74,6 @@ export function list(path: string, config?: IMediaFileInfoConf) {
               m.uri = config.serverUri.uri + m.path.split(config.serverUri.path)[1]
             }
 
-            console.log('add ' + files[0], getFileSize(files[0]))
             
              media.push(m)
 
@@ -89,7 +88,6 @@ export function list(path: string, config?: IMediaFileInfoConf) {
 
 
       async.eachSeries(media, (m, cb) => {
-        console.log('duration', m)
         getDuration(m.path).then((a) => {
           m.duration = a
           ffmetadata.read(m.path, function (err, data) {
