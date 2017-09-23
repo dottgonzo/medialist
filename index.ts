@@ -64,7 +64,7 @@ export function list(path: string, config?: IMediaFileInfoConf) {
       for (let i = 0; i < files.length; i++) {
 
         if (parseInt(getFileSize(files[0])) && parseInt(getFileSize(files[0])) > 0) {
-          console.log('check '+files[0],getFileSize(files[0]))
+          console.log('check ' + files[0], getFileSize(files[0]))
           const m: any = fileinfo.filenameinfo(files[i])
           if (m.extensionFamily === 'video' || m.extensionFamily === 'audio') {
 
@@ -89,6 +89,7 @@ export function list(path: string, config?: IMediaFileInfoConf) {
 
 
       async.eachSeries(media, (m, cb) => {
+        console.log('duration', m)
         getDuration(m.path).then((a) => {
           m.duration = a
           ffmetadata.read(m.path, function (err, data) {
