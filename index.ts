@@ -64,7 +64,6 @@ export function list(path: string, config?: IMediaFileInfoConf) {
       for (let i = 0; i < files.length; i++) {
 
         if (parseInt(getFileSize(files[0])) && parseInt(getFileSize(files[0])) > 0) {
-          console.log('check ' + files[0], getFileSize(files[0]))
           const m: any = fileinfo.filenameinfo(files[i])
           if (m.extensionFamily === 'video' || m.extensionFamily === 'audio') {
 
@@ -75,7 +74,8 @@ export function list(path: string, config?: IMediaFileInfoConf) {
               m.uri = config.serverUri.uri + m.path.split(config.serverUri.path)[1]
             }
 
-
+            console.log('add ' + files[0], getFileSize(files[0]))
+            
             // media.push(m)
 
           }
