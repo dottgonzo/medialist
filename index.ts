@@ -4,6 +4,9 @@ import * as Promise from 'bluebird'
 import * as async from 'async'
 import { uniqueid } from 'unicoid'
 
+const getFileSize = require('getfilesize');
+
+
 const getDuration = require('get-video-duration');
 const ffmetadata = require("ffmetadata");
 
@@ -54,11 +57,13 @@ export function list(path: string, config?: IMediaFileInfoConf) {
     find.file(path, function (files) {
 
 
-        const media: IMediaFileResp[] = []
+      const media: IMediaFileResp[] = []
 
 
 
-        for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i++) {
+
+        if (parseInt(getFileSize(files[0])) > 0) {
           const m: any = fileinfo.filenameinfo(files[i])
           if (m.extensionFamily === 'video' || m.extensionFamily === 'audio') {
 
@@ -73,43 +78,47 @@ export function list(path: string, config?: IMediaFileInfoConf) {
             media.push(m)
 
           }
-
         }
 
 
 
-        async.eachSeries(media, (m, cb) => {
-          getDuration(m.path).then((a) => {
-            m.duration = a
-            ffmetadata.read(m.path, function (err, data) {
-              if (err) {
-                cb("Error reading metadata")
-              } else {
-                m.meta = data
-                cb()
-              };
-            });
 
-          }).catch((err) => {
-            cb(err)
-          })
-        }, (err) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(media)
-          }
+      }
+
+
+
+      async.eachSeries(media, (m, cb) => {
+        getDuration(m.path).then((a) => {
+          m.duration = a
+          ffmetadata.read(m.path, function (err, data) {
+            if (err) {
+              cb("Error reading metadata")
+            } else {
+              m.meta = data
+              cb()
+            };
+          });
+
+        }).catch((err) => {
+          cb(err)
         })
-
-
-
-      }).error(function(err) {
+      }, (err) => {
         if (err) {
           reject(err)
         } else {
-          reject('find error')
+          resolve(media)
         }
       })
+
+
+
+    }).error(function (err) {
+      if (err) {
+        reject(err)
+      } else {
+        reject('find error')
+      }
+    })
 
 
 
