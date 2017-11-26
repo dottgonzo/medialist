@@ -1,1 +1,6 @@
 test/
+typings/
+*.ts
+tsconfig.json
+typings.json
+package-lock.json
