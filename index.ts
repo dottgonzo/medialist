@@ -16,7 +16,7 @@ interface IMediaFileInfoConf {
   exclude?: string[]
   serverUri?: { path: string, uri: string }
 }
-interface IMediaFileResp {
+export interface IMediaFileResp {
   meta: IMediaFileMeta
   duration: string
   path: string
