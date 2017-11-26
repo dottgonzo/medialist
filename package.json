@@ -1,6 +1,6 @@
 {
   "name": "medialist",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "list media files",
   "main": "index.js",
   "scripts": {
